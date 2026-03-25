@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#07051a"/>
+      <stop offset="0.5" stop-color="#04010a"/>
+      <stop offset="1" stop-color="#07061a"/>
+    </linearGradient>
+    <linearGradient id="neon" x1="0" x2="1">
+      <stop offset="0" stop-color="#B026FF"/>
+      <stop offset="0.5" stop-color="#00F5FF"/>
+      <stop offset="1" stop-color="#FF2BD6"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feColorMatrix
+        type="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+        result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0H0V22" fill="none" stroke="rgba(176,38,255,0.15)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect width="800" height="500" fill="url(#grid)" opacity="0.45"/>
+
+  <!-- neural connections -->
+  <g filter="url(#glow)" fill="none" stroke="url(#neon)" stroke-width="3" opacity="0.85">
+    <path d="M130 280 C200 190 260 190 320 250 C370 300 440 320 500 290 C560 260 610 240 670 260"/>
+    <path d="M160 160 C220 210 260 235 310 210 C360 185 420 120 480 140 C540 160 590 220 640 200"/>
+    <path d="M190 360 C260 330 300 320 360 350 C430 390 500 410 590 370"/>
+  </g>
+
+  <!-- brain silhouette -->
+  <g filter="url(#glow)">
+    <path
+      d="M400 120
+         C340 120 300 160 300 210
+         C250 215 230 250 235 285
+         C210 310 215 345 240 365
+         C245 415 295 425 325 405
+         C350 435 390 440 420 420
+         C455 450 510 430 515 380
+         C545 375 575 350 570 310
+         C595 290 590 250 560 240
+         C560 170 510 120 455 130
+         C435 110 420 100 400 120 Z"
+      fill="rgba(0,245,255,0.07)"
+      stroke="url(#neon)"
+      stroke-width="4"
+      opacity="0.95"/>
+
+    <!-- nodes -->
+    <g>
+      <circle cx="240" cy="300" r="9" fill="#00F5FF" opacity="0.95"/>
+      <circle cx="305" cy="215" r="10" fill="#B026FF" opacity="0.95"/>
+      <circle cx="340" cy="275" r="9" fill="#FF2BD6" opacity="0.95"/>
+      <circle cx="400" cy="195" r="11" fill="#00F5FF" opacity="0.95"/>
+      <circle cx="455" cy="245" r="9" fill="#B026FF" opacity="0.95"/>
+      <circle cx="515" cy="195" r="10" fill="#FF2BD6" opacity="0.95"/>
+      <circle cx="560" cy="315" r="10" fill="#00F5FF" opacity="0.95"/>
+      <circle cx="510" cy="380" r="9" fill="#B026FF" opacity="0.95"/>
+      <circle cx="350" cy="380" r="9" fill="#FF2BD6" opacity="0.95"/>
+    </g>
+  </g>
+
+  <!-- title -->
+  <g font-family="Orbitron, system-ui, sans-serif" filter="url(#glow)" fill="rgba(255,255,255,0.92)">
+    <text x="60" y="465" font-size="26" letter-spacing="2">MACHINE LEARNING // NEURAL OPS</text>
+  </g>
+</svg>
+

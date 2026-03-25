@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#04010a"/>
+      <stop offset="0.55" stop-color="#07061a"/>
+      <stop offset="1" stop-color="#05030e"/>
+    </linearGradient>
+    <linearGradient id="neon" x1="0" x2="1">
+      <stop offset="0" stop-color="#00F5FF"/>
+      <stop offset="0.5" stop-color="#B026FF"/>
+      <stop offset="1" stop-color="#FF2BD6"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feColorMatrix
+        type="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+        result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse">
+      <path d="M26 0H0V26" fill="none" stroke="rgba(0,245,255,0.14)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect width="800" height="500" fill="url(#grid)" opacity="0.45"/>
+
+  <!-- neon t-shirt outline -->
+  <g filter="url(#glow)" stroke="url(#neon)" stroke-width="6" fill="rgba(176,38,255,0.06)">
+    <path
+      d="M270 125
+         L340 90
+         Q400 65 460 90
+         L530 125
+         L560 215
+         L520 215
+         L520 395
+         Q400 430 280 395
+         L280 215
+         L240 215
+         Z"
+      stroke-linejoin="round"/>
+  </g>
+
+  <!-- collar glow -->
+  <g filter="url(#glow)">
+    <path d="M340 90 Q400 65 460 90" stroke="url(#neon)" stroke-width="6" fill="none" />
+    <path d="M288 208 L280 250" stroke="rgba(0,245,255,0.7)" stroke-width="4" fill="none"/>
+    <path d="M512 208 L520 250" stroke="rgba(255,43,214,0.7)" stroke-width="4" fill="none"/>
+  </g>
+
+  <!-- ByteMonk glyph -->
+  <g filter="url(#glow)">
+    <text
+      x="400"
+      y="285"
+      text-anchor="middle"
+      font-family="Orbitron, system-ui, sans-serif"
+      font-size="34"
+      letter-spacing="3"
+      fill="rgba(255,255,255,0.92)">BYTEMONK</text>
+    <text
+      x="400"
+      y="325"
+      text-anchor="middle"
+      font-family="Orbitron, system-ui, sans-serif"
+      font-size="16"
+      letter-spacing="4"
+      fill="rgba(0,245,255,0.85)">NEON EDITION</text>
+  </g>
+</svg>
+
