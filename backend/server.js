@@ -3,9 +3,11 @@ const cors = require('cors')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
+const rateLimit = require('express-rate-limit');
+const courses = require("./lib/courses.js");
 
 const app = express()
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 8080;
 
 app.use(
   cors({
@@ -16,71 +18,27 @@ app.use(express.json({ limit: '1mb' }))
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_change_me'
 
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+  message : { message: 'Too many requests, please try again later.' },
+})
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // limit each IP to 20 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+  message : { message: 'Too many login attempts, please try again later.' },
+});
+
+app.use(generalLimiter);
+
 // In-memory "DB" for this demo (no database requested).
 let users = []
 let nextUserId = 1
-
-const courses = [
-  {
-    id: 'tshirt',
-    title: 'ByteMonk Tshirt',
-    tagline: 'Neon comfort, cyber-ready.',
-    description: 'A limited ByteMonk merch drop designed to glow in your late-night lab sessions.',
-    level: 'Merch Drop',
-    duration: 'Limited',
-    price: 19,
-    image: '/courses/tshirt.png',
-    highlights: ['Soft cotton', 'Neon print', 'ByteMonk edition'],
-  },
-  {
-    id: 'cybersecurity',
-    title: 'Cybersecurity Course',
-    tagline: 'Learn ethical hacking fundamentals and real-world defense.',
-    description:
-      'From threat modeling to hands-on labs: build a practical security mindset.',
-    level: 'Beginner to Intermediate',
-    duration: '6 weeks',
-    price: 89,
-    image: '/courses/cybersecurity.png',
-    highlights: ['OWASP Top 10', 'Hands-on labs', 'Capstone project'],
-  },
-  {
-    id: 'machine-learning',
-    title: 'Machine Learning Course',
-    tagline: 'Neural intuition with engineering-grade fundamentals.',
-    description:
-      'Train, evaluate, and deploy models with confidence. Great for builders.',
-    level: 'Intermediate',
-    duration: '8 weeks',
-    price: 119,
-    image: '/courses/machine-learning.png',
-    highlights: ['Feature pipelines', 'Model evaluation', 'Deployment basics'],
-  },
-  {
-    id: 'docker-masterclass',
-    title: 'Docker Masterclass',
-    tagline: 'Ship apps faster with clean container workflows.',
-    description:
-      'Learn images, networking, volumes, and production-ready Docker practices.',
-    level: 'Beginner to Intermediate',
-    duration: '4 weeks',
-    price: 49,
-    image: '/courses/docker.png',
-    highlights: ['Dockerfiles', 'Compose stacks', 'Production patterns'],
-  },
-  {
-    id: 'system-design',
-    title: 'System Design Course',
-    tagline: 'Design scalable services with clarity and trade-offs.',
-    description:
-      'From APIs to databases and caching: practice design interviews the right way.',
-    level: 'Intermediate to Advanced',
-    duration: '7 weeks',
-    price: 89,
-    image: '/courses/system-design.png',
-    highlights: ['Scalability', 'Databases', 'Caching & queues'],
-  },
-]
 
 function authRequired(req, res, next) {
   const header = req.headers.authorization || ''
@@ -102,7 +60,7 @@ app.get('/', (req, res) => {
   res.send('ByteMonk Store API is running.')
 })
 
-app.post('/api/signup', async (req, res) => {
+app.post('/api/signup', authLimiter, async (req, res) => {
   const { email, password, name } = req.body || {}
   if (!email || typeof email !== 'string') {
     return res.status(400).json({ message: 'Email is required' })
@@ -135,7 +93,7 @@ app.post('/api/signup', async (req, res) => {
   })
 })
 
-app.post('/api/login', async (req, res) => {
+app.post('/api/login', authLimiter, async (req, res) => {
   const { email, password } = req.body || {}
   if (!email || typeof email !== 'string' || !password || typeof password !== 'string') {
     return res.status(400).json({ message: 'Email and password are required' })

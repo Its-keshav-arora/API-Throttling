@@ -4,22 +4,21 @@ import http from "http";
 
 const TARGET_URL = "http://localhost:8080/api/courses";
 const NUM_CPUS = os.cpus().length;
-
-const BATCH_SIZE = 2000;   // requests per loop per worker
+const BATCH_SIZE = 2000;
 
 function makeRequest() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const req = http.get(TARGET_URL, (res) => {
       res.on("data", () => {});
-      res.on("end", resolve);
+      res.on("end", () => resolve(res.statusCode));
     });
-
-    req.on("error", reject);
+    req.on("error", () => resolve("error"));
   });
 }
 
 async function worker() {
   let count = 0;
+  let totalBlocked = 0;
 
   while (true) {
     const promises = [];
@@ -28,18 +27,26 @@ async function worker() {
       promises.push(makeRequest());
     }
 
-    await Promise.allSettled(promises);
+    const results = await Promise.allSettled(promises);
+    const statuses = results.map((r) => r.value);
+
+    const blocked = statuses.filter((s) => s === 429).length;
+    const errors = statuses.filter((s) => s === "error").length;
+    const ok = statuses.filter((s) => s === 200).length;
 
     count += BATCH_SIZE;
+    totalBlocked += blocked;
 
-    if (count % 1000 === 0) {
-      console.log(`Worker ${process.pid} sent ${count} requests`);
-    }
+    console.log(
+      `Worker ${process.pid} | Batch #${count / BATCH_SIZE} | ` +
+      `200: ${ok} | 429: ${blocked} | errors: ${errors} | ` +
+      `Total blocked so far: ${totalBlocked}`
+    );
   }
 }
 
 if (cluster.isPrimary) {
-  console.log(`Primary ${process.pid} is running`);
+  console.log(`Primary ${process.pid} is running with ${NUM_CPUS} workers`);
 
   for (let i = 0; i < NUM_CPUS; i++) {
     cluster.fork();
@@ -49,7 +56,6 @@ if (cluster.isPrimary) {
     console.log(`Worker ${worker.process.pid} died. Restarting...`);
     cluster.fork();
   });
-
 } else {
   worker();
 }
