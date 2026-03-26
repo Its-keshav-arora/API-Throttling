@@ -60,9 +60,6 @@ export default function DashboardPage() {
       <div className="dash-hero">
         <div className="dash-hero-left">
           <h1 className="dash-title">Dashboard</h1>
-          <p className="dash-subtitle">
-            Welcome{userName ? `, ${userName}` : ''}. Neon-powered learning drops await.
-          </p>
           <div className="dash-stats">
             <div className="dash-stat">
               <div className="dash-stat-label">Courses loaded</div>
