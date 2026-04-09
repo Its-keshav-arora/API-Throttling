@@ -39,7 +39,7 @@ async function worker() {
 
     console.log(
       `Worker ${process.pid} | Batch #${count / BATCH_SIZE} | ` +
-      `200: ${ok} | 429: ${blocked} | errors: ${errors} | ` +
+      `200: ${ok} | 429: ${blocked} | ` +
       `Total blocked so far: ${totalBlocked}`
     );
   }

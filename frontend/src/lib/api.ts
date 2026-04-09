@@ -2,6 +2,7 @@ import { clearToken, getToken } from './auth'
 import type { Course } from './types'
 
 type ApiError = Error & { status?: number }
+type UnknownRecord = Record<string, unknown>
 
 async function requestJson<T>(path: string, options: RequestInit): Promise<T> {
   const res = await fetch(path, options)
@@ -55,15 +56,37 @@ export async function getMe() {
 }
 
 export async function getCourses() {
-  return requestJson<{ courses: Course[] }>('/api/courses', {
+  const payload = await requestJson<unknown>('/api/courses', {
     method: 'GET',
     headers: tokenHeaders()
   })
+
+  return { courses: normalizeCourses(payload) }
 }
 
 function tokenHeaders(): Record<string, string> {
   const token = getToken()
   if (!token) return {}
   return { Authorization: `Bearer ${token}` }
+}
+
+function normalizeCourses(payload: unknown): Course[] {
+  // Handle plain array, { courses: [...] }, and CJS/ESM interop shapes.
+  if (Array.isArray(payload)) return payload as Course[]
+  if (!payload || typeof payload !== 'object') return []
+
+  const top = payload as UnknownRecord
+  const coursesField = top.courses
+  if (Array.isArray(coursesField)) return coursesField as Course[]
+
+  if (coursesField && typeof coursesField === 'object') {
+    const maybeDefault = (coursesField as UnknownRecord).default
+    if (Array.isArray(maybeDefault)) return maybeDefault as Course[]
+  }
+
+  const topDefault = top.default
+  if (Array.isArray(topDefault)) return topDefault as Course[]
+
+  return []
 }
 

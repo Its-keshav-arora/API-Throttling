@@ -34,7 +34,7 @@ const authLimiter = rateLimit({
   message : { message: 'Too many login attempts, please try again later.' },
 });
 
-app.use(generalLimiter);
+// app.use(generalLimiter);
 
 // In-memory "DB" for this demo (no database requested).
 let users = []
