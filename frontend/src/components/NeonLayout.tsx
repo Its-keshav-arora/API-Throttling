@@ -16,7 +16,7 @@ export default function NeonLayout({
           <div className="neon-brand-text">
             <div className="neon-brand-title">ByteMonk Store</div>
             <div className="neon-brand-subtitle">
-              {production ? 'Browse products • No login required' : 'Where Every Byte Sparks Insight!'}
+              Where Every Byte Sparks Insight!
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@ export default function NeonLayout({
 
       <footer className="neon-footer">
         <span className="neon-footer-dot" />
-        <span>Built for rapid learning. Sold with neon precision.</span>
+        <span>ByteMonk - Where Every Byte Sparks Insight!</span>
       </footer>
     </div>
   )

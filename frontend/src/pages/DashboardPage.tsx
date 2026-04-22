@@ -60,12 +60,6 @@ export default function DashboardPage() {
       <div className="dash-hero">
         <div className="dash-hero-left">
           <h1 className="dash-title">Dashboard</h1>
-          <div className="dash-stats">
-            <div className="dash-stat">
-              <div className="dash-stat-label">Courses loaded</div>
-              <div className="dash-stat-value">{courseCount}</div>
-            </div>
-          </div>
         </div>
 
         <div className="dash-hero-right">
