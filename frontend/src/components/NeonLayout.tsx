@@ -34,6 +34,12 @@ export default function NeonLayout({
       <footer className="neon-footer">
         <span className="neon-footer-dot" />
         <span>ByteMonk - Where Every Byte Sparks Insight!</span>
+        <Link className="neon-footer-link" to="/privacy-policy">
+          Privacy Policy
+        </Link>
+        <Link className="neon-footer-link" to="/terms-and-conditions">
+          Terms & Conditions
+        </Link>
       </footer>
     </div>
   )

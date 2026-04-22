@@ -1,8 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import NeonLayout from './components/NeonLayout'
+import ChatbotWidget from './components/ChatbotWidget'
 import DashboardPage from './pages/DashboardPage'
 import LoginPage from './pages/LoginPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import SignupPage from './pages/SignupPage'
+import TermsAndConditionsPage from './pages/TermsAndConditionsPage'
 import { getToken } from './lib/auth'
 
 function LandingRedirect() {
@@ -43,8 +46,11 @@ export default function App() {
             path="/dashboard"
             element={<DashboardPage />}
           />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
           <Route path="*" element={<LandingRedirect />} />
         </Routes>
+        <ChatbotWidget />
       </NeonLayout>
     </BrowserRouter>
   )

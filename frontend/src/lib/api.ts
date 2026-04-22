@@ -64,6 +64,14 @@ export async function getCourses() {
   return { courses: normalizeCourses(payload) }
 }
 
+export async function askChatbot(message: string) {
+  return requestJson<{ reply: string }>('/api/chatbot', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message }),
+  })
+}
+
 function tokenHeaders(): Record<string, string> {
   const token = getToken()
   if (!token) return {}

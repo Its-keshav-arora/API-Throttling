@@ -1,21 +1,16 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import CourseCard from '../components/CourseCard'
 import type { Course } from '../lib/types'
 import { clearToken, getToken } from '../lib/auth'
 import { getCourses, getMe } from '../lib/api'
 
-type MeResponse = { user: { sub: number; email: string; name: string } }
-
 export default function DashboardPage() {
   const navigate = useNavigate()
   const [courses, setCourses] = useState<Course[]>([])
-  const [userName, setUserName] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const token = getToken()
-
-  const courseCount = useMemo(() => courses.length, [courses.length])
 
   useEffect(() => {
     let cancelled = false
@@ -24,16 +19,10 @@ export default function DashboardPage() {
       setLoading(true)
       setError(null)
       try {
-        const mePromise = token
-          ? getMe()
-              .then((me) => me as MeResponse)
-              .catch(() => null)
-          : Promise.resolve(null)
-
-        const [me, courseResp] = await Promise.all([mePromise, getCourses()])
+        const mePromise = token ? getMe().catch(() => null) : Promise.resolve(null)
+        const [, courseResp] = await Promise.all([mePromise, getCourses()])
 
         if (cancelled) return
-        if (me) setUserName(me.user.name)
         setCourses(courseResp.courses)
       } catch (err) {
         setError(
