@@ -23,6 +23,12 @@ function toPlainChatText(value: string): string {
     .trim()
 }
 
+function formatChatResponseWithSource(reply: string, source?: string): string {
+  const cleanReply = toPlainChatText(reply)
+  const normalizedSource = source === 'redis' ? 'redis' : 'LLM'
+  return `${cleanReply}\nsource : ${normalizedSource}`
+}
+
 export default function ChatbotWidget() {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState('')
@@ -57,7 +63,7 @@ export default function ChatbotWidget() {
       const botMessage: ChatMessage = {
         id: `b-${Date.now()}`,
         role: 'assistant',
-        text: toPlainChatText(response.reply),
+        text: formatChatResponseWithSource(response.reply, response.source),
       }
       setMessages((prev) => [...prev, botMessage])
     } catch (err) {

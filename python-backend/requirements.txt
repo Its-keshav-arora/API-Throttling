@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+redisvl
+transformers==4.41.2
+torch
+numpy
+groq

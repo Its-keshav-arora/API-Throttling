@@ -3,6 +3,7 @@ import type { Course } from './types'
 
 type ApiError = Error & { status?: number }
 type UnknownRecord = Record<string, unknown>
+const CHATBOT_API_URL = (import.meta.env.VITE_CHATBOT_API_URL as string | undefined)?.trim() || '/api/chatbot'
 
 async function requestJson<T>(path: string, options: RequestInit): Promise<T> {
   const res = await fetch(path, options)
@@ -65,7 +66,7 @@ export async function getCourses() {
 }
 
 export async function askChatbot(message: string) {
-  return requestJson<{ reply: string }>('/api/chatbot', {
+  return requestJson<{ reply: string; source?: string }>(CHATBOT_API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ message }),
