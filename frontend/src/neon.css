@@ -31,7 +31,7 @@ body {
 
 body {
   margin: 0;
-  font-family: 'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: var(--sans);
   background:
     radial-gradient(900px circle at 15% 10%, rgba(176, 38, 255, 0.32), transparent 55%),
     radial-gradient(740px circle at 85% 12%, rgba(0, 245, 255, 0.2), transparent 54%),
@@ -146,7 +146,7 @@ html {
 }
 
 .neon-brand-title {
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   font-weight: 700;
   letter-spacing: 0.4px;
   font-size: 15px;
@@ -159,7 +159,7 @@ html {
 }
 
 .neon-badge {
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 12px;
   letter-spacing: 0.3px;
   padding: 8px 12px;
@@ -259,7 +259,7 @@ html {
 .auth-title h1 {
   position: relative;
   margin: 0;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   letter-spacing: 0.6px;
   font-size: 28px;
 }
@@ -331,7 +331,7 @@ html {
   cursor: pointer;
   border-radius: 16px;
   padding: 12px 14px;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   letter-spacing: 0.4px;
   color: rgba(8, 5, 18, 0.98);
   background: linear-gradient(90deg, var(--neonB), var(--neonA));
@@ -422,7 +422,7 @@ html {
 
 .dash-title {
   margin: 0 0 4px;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 30px;
   letter-spacing: 0.6px;
 }
@@ -453,7 +453,7 @@ html {
 }
 
 .dash-stat-value {
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 20px;
   letter-spacing: 0.4px;
 }
@@ -515,7 +515,7 @@ html {
 
 .course-pill {
   align-self: flex-start;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 10px;
   letter-spacing: 0.35px;
   padding: 6px 9px;
@@ -526,7 +526,7 @@ html {
 
 .course-title {
   margin: 0;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 16px;
   letter-spacing: 0.4px;
 }
@@ -573,7 +573,7 @@ html {
 
 .course-meta-value {
   margin-top: 2px;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   letter-spacing: 0.25px;
 }
 
@@ -619,7 +619,7 @@ html {
 }
 
 .course-price-value {
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   letter-spacing: 0.3px;
   font-size: 18px;
 }
@@ -699,7 +699,7 @@ html {
 
 .chatbot-title {
   margin: 0;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 13px;
 }
 
@@ -778,7 +778,7 @@ html {
   border: 0;
   border-radius: 10px;
   padding: 9px 12px;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 11px;
   cursor: pointer;
   background: linear-gradient(90deg, var(--neonB), var(--neonA));
@@ -813,7 +813,7 @@ html {
 
 .legal-title {
   margin: 0 0 6px;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 28px;
 }
 
