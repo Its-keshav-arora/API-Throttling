@@ -451,8 +451,10 @@ app.get('/api/me', authRequired, (req, res) => {
 })
 
 app.get('/api/courses', (req, res) => {
-  return res.status(200).json({ courses })
-})
+  setTimeout(() => {
+    return res.status(200).json({ courses });
+  }, 5000); // intentionally slow API
+});
 
 app.post('/api/chatbot', chatbotLimiter, async (req, res) => {
   const { message } = req.body || {}
