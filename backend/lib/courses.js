@@ -49,5 +49,4 @@ const courses = [
   }
 ]
 
-
-export default courses;
+module.exports = courses
